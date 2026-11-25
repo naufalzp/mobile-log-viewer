@@ -159,3 +159,7 @@ public/             the web page
 Logs can contain access tokens, personal data and API payloads. The server binds to `127.0.0.1` only and checks the
 `Host` and `Origin` headers, so other machines and other websites cannot read it. Be careful with what you export
 and share.
+
+## License
+
+[MIT](LICENSE)
