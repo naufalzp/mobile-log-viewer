@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mobile Logs</title>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    try {
+      const p = JSON.parse(localStorage.getItem('mlv-prefs') || '{}');
+      const theme = p.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = theme;
+    } catch { document.documentElement.dataset.theme = 'dark'; }
+  </script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="conn" id="conn" title="Connecting"></span>Mobile Logs</div>
+    <div class="devices" id="devices"></div>
+  </header>
+
+  <div class="toolbar">
+    <div class="search">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2a5 5 0 1 0 3.1 8.9l3 3 1-1-3-3A5 5 0 0 0 7 2Zm0 1.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Z"/></svg>
+      <input id="q" placeholder="Search   tag:OkHttp   proc:uat   -exclude   /regex/" spellcheck="false" autocomplete="off">
+      <button id="qclear" class="ghost" title="Clear search (Esc)" hidden>×</button>
+    </div>
+    <div class="levels" id="levels" role="group" aria-label="Minimum level"></div>
+    <label class="switch" title="Only your app processes (MLOG_ANDROID_APPS / MLOG_IOS_APPS)">
+      <input type="checkbox" id="appOnly"><span>App only</span>
+    </label>
+    <label class="switch" title="iOS: hide Apple framework lines (Network, CFNetwork, UIKitCore…) below Error">
+      <input type="checkbox" id="hideSystem"><span>Hide iOS system</span>
+    </label>
+    <div class="actions">
+      <button id="pause" title="Pause (p)">Pause</button>
+      <button id="mark" title="Insert a marker (m). Shift-click to name it">Mark</button>
+      <button id="clear" title="Clear all logs (c)">Clear</button>
+      <button id="export" title="Download the filtered logs">Export</button>
+      <button id="wrap" title="Wrap long lines (w)">Wrap</button>
+      <button id="theme" class="icon" title="Light / dark">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm0 1.5v10a5 5 0 0 1 0-10Z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <main class="list" id="list">
+    <button class="more" id="more" hidden></button>
+    <div id="rows"></div>
+    <div class="empty" id="empty"></div>
+  </main>
+  <button class="jump" id="jump" hidden>↓ Latest</button>
+
+  <footer class="status">
+    <span id="shown"></span>
+    <span id="rate"></span>
+    <button class="crashes" id="crashes" hidden title="Jump to the next crash"></button>
+    <span class="keys"><kbd>/</kbd> search <kbd>p</kbd> pause <kbd>m</kbd> mark <kbd>e</kbd> errors <kbd>w</kbd> wrap <kbd>c</kbd> clear</span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "port": 7799,
+  "autoStart": true,
+  "bufferPerDevice": 20000,
+  "androidBacklog": 2000,
+  "iosDefaultMode": "app",
+  "apps": {
+    "android": [],
+    "ios": []
+  }
+}
